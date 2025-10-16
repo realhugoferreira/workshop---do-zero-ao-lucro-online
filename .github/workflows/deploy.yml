@@ -1,5 +1,9 @@
 name: Build and deploy to GitHub Pages
 
+permissions:
+  contents: write
+  pages: write
+
 on:
   push:
     branches: [ main, master ]
@@ -28,6 +32,12 @@ jobs:
 
       - name: Show dist files
         run: ls -la ./dist || true
+
+      - name: Show git info before deploy
+        run: |
+          git status --porcelain=2 --branch || true
+          git remote -v || true
+          git branch -a || true
 
       - name: Setup git for deploy
         run: |
